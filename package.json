@@ -1,0 +1,56 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Spaghetti",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "knex migrate:latest --env test && knex seed:run --env test",
+    "test": "NODE_ENV=test mocha --require babel-register --recursive",
+    "precommit": "lint-staged",
+    "start": "DEBUG=knex:query nodemon app/index.js --exec babel-node",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "build": "babel -D -d dist app",
+    "knex": "knex"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write --single-quote --trailing-comma all",
+      "git add"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.2",
+    "connect-session-knex": "^1.4.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "knex": "^0.16.3",
+    "lodash": "^4.17.11",
+    "morgan": "^1.9.0",
+    "objection": "^1.5.3",
+    "objection-visibility": "^0.4.0",
+    "pg": "^7.8.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.3"
+  }
+}
