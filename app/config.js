@@ -4,6 +4,7 @@ const common = {
   env: NODE_ENV,
   host: HOST,
   port: PORT,
+  secret: 'spaghetti',
 };
 
 const development = {
