@@ -66,10 +66,9 @@ export const signup = async (req, res) => {
     if (existingUser) {
       res.status(412).json({ success: false });
     } else {
-      const user = await Accounts.prepareUserForRegistration(req.body);
       const createdUser = await Accounts.createUser({
         origin: req.headers.origin,
-        userData: user,
+        userData: req.body,
       });
       res.json(createdUser);
     }

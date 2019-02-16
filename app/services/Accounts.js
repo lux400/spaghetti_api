@@ -4,6 +4,7 @@ import uuidv4 from 'uuid/v4';
 import { transaction } from 'objection';
 
 import { User } from '../models';
+import { ROLE_USER, STATUS_UNCONFIRMED } from '../constants';
 
 const saltRounds = 10;
 
@@ -35,6 +36,8 @@ export const prepareUserForRegistration = async (params) => {
 
   Object.assign(user, await preparePassword(user.password));
   user.confirmationCode = uuidv4();
+  user.statusKey = STATUS_UNCONFIRMED;
+  user.roleKey = ROLE_USER;
   delete user.password;
 
   return user;
