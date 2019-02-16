@@ -59,6 +59,7 @@ export const resetPasswordConfirmed = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
+  console.log(req.body);
   try {
     const { email } = req.body;
     const existingUser = await Accounts.getUserBy('email', email).select('id');
@@ -66,10 +67,9 @@ export const signup = async (req, res) => {
     if (existingUser) {
       res.status(412).json({ success: false });
     } else {
-      const user = await Accounts.prepareUserForRegistration(req.body);
       const createdUser = await Accounts.createUser({
         origin: req.headers.origin,
-        userData: user,
+        userData: req.body,
       });
       res.json(createdUser);
     }
