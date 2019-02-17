@@ -1,4 +1,4 @@
-const { NODE_ENV = 'development', HOST = '0.0.0.0', PORT = 8000 } = process.env;
+const { NODE_ENV = 'development', HOST = '0.0.0.0', PORT = 1337 } = process.env;
 
 const common = {
   env: NODE_ENV,
