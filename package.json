@@ -12,8 +12,8 @@
     "prebuild": "npm run clean",
     "build": "babel -D -d dist app",
     "knex": "knex",
-    "dev-migration": "knex migrate:latest",
-    "dev-seeds": "knex seed:run"
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
   },
   "lint-staged": {
     "*.js": [

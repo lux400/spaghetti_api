@@ -8,7 +8,6 @@
  * @param {Function} next next function
  */
 export default (err, req, res, next) => {
-  console.error('Request error: ', err);
   res.status(err.status || 500);
 
   const response = {
@@ -83,3 +82,7 @@ export class InternalError extends ApiError {
     super(message, 500);
   }
 }
+
+export const throwError = (Instance, data, ...args) => {
+  if (!data) throw new Instance(...args);
+};
