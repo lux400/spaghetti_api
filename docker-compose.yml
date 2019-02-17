@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  app:
+    build: .
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    command: ["./start.sh", $PORT]
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=$DATABASE_USERNAME
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME

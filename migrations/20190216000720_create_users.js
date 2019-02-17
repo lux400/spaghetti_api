@@ -5,10 +5,9 @@ exports.up = (knex) =>
       .string('email')
       .unique()
       .notNullable();
-    table.string('password_hash');
+    table.string('password_hash').notNullable();
     table.string('first_name');
     table.string('last_name');
-    table.string('password').notNullable();
     table
       .string('role_key')
       .references('key')
@@ -22,6 +21,7 @@ exports.up = (knex) =>
       .inTable('user_status')
       .onDelete('RESTRICT')
       .onUpdate('CASCADE');
+    table.uuid('confirmation_code');
     table.timestamps(true, true);
   });
 

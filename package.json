@@ -7,11 +7,13 @@
     "pretest": "knex migrate:latest --env test && knex seed:run --env test",
     "test": "NODE_ENV=test mocha --require babel-register --recursive",
     "precommit": "lint-staged",
-    "start": "DEBUG=knex:query nodemon app/index.js --exec babel-node",
+    "start": "cross-env-shell DEBUG=knex:query nodemon app/index.js --exec babel-node",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
     "build": "babel -D -d dist app",
-    "knex": "knex"
+    "knex": "knex",
+    "migrate": "knex migrate:latest",
+    "seed": "knex seed:run"
   },
   "lint-staged": {
     "*.js": [
@@ -44,6 +46,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
+    "cross-env": "^5.2.0",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-config-prettier": "^2.3.0",

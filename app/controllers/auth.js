@@ -1,10 +1,12 @@
 import * as Accounts from '../services/Accounts';
+import { throwError, ValidationError } from '../utils/errorHandler';
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
     const user = await Accounts.getUserBy('email', email);
+    throwError(ValidationError, user, 'There is no such user');
 
     await Accounts.validatePassword(password, user.passwordHash);
 
@@ -15,8 +17,8 @@ export const login = async (req, res) => {
 
     res.json(user);
   } catch (e) {
-    console.log(e);
-    res.status(401).json({ success: false });
+    e.status = 401;
+    next(e);
   }
 };
 
@@ -58,7 +60,7 @@ export const resetPasswordConfirmed = async (req, res) => {
   }
 };
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   try {
     const { email } = req.body;
     const existingUser = await Accounts.getUserBy('email', email).select('id');
@@ -66,16 +68,16 @@ export const signup = async (req, res) => {
     if (existingUser) {
       res.status(412).json({ success: false });
     } else {
-      const user = await Accounts.prepareUserForRegistration(req.body);
       const createdUser = await Accounts.createUser({
         origin: req.headers.origin,
-        userData: user,
+        userData: req.body,
       });
       res.json(createdUser);
     }
   } catch (e) {
     console.log(e);
-    res.status(422).json({ success: false });
+    e.status = 422;
+    next(e);
   }
 };
 
