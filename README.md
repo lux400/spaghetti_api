@@ -4,7 +4,7 @@ We don't what it is for now.
 
 ### Prerequisites
 
-Node, Git, PostgreSQL, Docker needs to be installed (latest).
+Git, Node.js, PostgreSQL, Docker/Docker Compose, needs to be installed (latest).
 
 ### Installing
 
