@@ -4,16 +4,16 @@ services:
 
   app:
     build: .
+    command: ['./start.sh', $PORT]
     depends_on:
-      - postgres
+    - postgres
     env_file:
-      - .env
-    command: ["./start.sh", $PORT]
+    - .env
+    ports:
+      - "1337:1337"
 
   postgres:
     image: postgres:latest
-    ports:
-      - "5432:5432"
     env_file:
       - .env
     environment:
