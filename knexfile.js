@@ -2,6 +2,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
+      host: 'postgres',
       database: 'spaghetti_dev',
       user: 'postgres',
       password: 'postgres',

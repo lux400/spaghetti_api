@@ -15,10 +15,9 @@ ENV DATABASE_PASSWORD $DATABASE_PASSWORD
 
 # Install app dependencies
 COPY package.json .
-RUN npm install
 
 COPY . .
 RUN ["chmod", "+x", "./start.sh"]
 
-EXPOSE 80
+EXPOSE 1337
 CMD [ "npm", "start" ]
