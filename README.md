@@ -1,6 +1,6 @@
 # Spaghetti
 
-We don't what it is for now.
+We don't know what it is for now.
 
 ### Prerequisites
 

@@ -15,9 +15,6 @@ ENV DATABASE_PASSWORD $DATABASE_PASSWORD
 
 # Install app dependencies
 COPY package.json .
-RUN npm install
-RUN apt-get update
-RUN apt-get -y install lsof
 
 COPY . .
 RUN ["chmod", "+x", "./start.sh"]
