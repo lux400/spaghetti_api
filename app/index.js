@@ -6,7 +6,6 @@ import knexConnect from 'connect-session-knex';
 import { ApolloServer } from 'apollo-server-express';
 
 import config from './config';
-import router from './routes';
 import * as models from './models';
 import schema from './schema';
 import resolvers from './resolvers';
@@ -41,7 +40,6 @@ app.use(
   }),
 );
 app.use('/uploads', express.static('uploads'));
-app.use('/api', router);
 
 server.applyMiddleware({ app });
 
