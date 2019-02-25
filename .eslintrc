@@ -4,10 +4,9 @@
     "node": true
   },
 
-  "extends": [
-    "airbnb-base",
-    "prettier"
-  ],
-
+  "extends": ["airbnb-base", "prettier"],
+  "rules": {
+    "import/prefer-default-export": false
+  },
   "parser": "babel-eslint"
 }
