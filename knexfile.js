@@ -2,7 +2,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: 'postgres',
+      host: process.env.DATABASE_HOST || undefined,
       database: 'spaghetti_dev',
       user: 'postgres',
       password: 'postgres',
