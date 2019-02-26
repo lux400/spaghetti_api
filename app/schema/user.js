@@ -21,11 +21,13 @@ export default gql`
     statusKey: UserStatusEnum!
     roleKey: UserRoleEnum!
     confirmationCode: String
+    token: String
+    refreshToken: String
   }
 
   type Query {
-    users: [User]!
-    me: User
+    users(authToken: String) : [User]!
+    me(authToken: String): User
   }
 
   type Mutation {

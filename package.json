@@ -13,6 +13,7 @@
     "build": "babel -D -d dist app",
     "knex": "knex",
     "migrate": "knex migrate:latest",
+    "make-migrate": "knex migrate:make",
     "seed": "knex seed:run"
   },
   "lint-staged": {
@@ -29,18 +30,20 @@
     "apollo-server-express": "^2.4.5",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.2",
-    "connect-session-knex": "^1.4.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "express-session": "^1.15.6",
     "graphql": "^14.1.1",
     "graphql-resolvers": "^0.3.2",
+    "jsonwebtoken": "^8.5.0",
     "knex": "^0.16.3",
     "lodash": "^4.17.11",
     "morgan": "^1.9.0",
     "objection": "^1.5.3",
     "objection-visibility": "^0.4.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^7.8.0",
+    "rand-token": "^0.4.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

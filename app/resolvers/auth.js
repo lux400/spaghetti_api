@@ -1,11 +1,9 @@
 import { transaction } from 'objection';
-import { skip } from 'graphql-resolvers';
-import { ApolloError, ValidationError, ForbiddenError } from 'apollo-server-express';
-import * as Accounts from '../services/Accounts';
+import { ApolloError, ValidationError } from 'apollo-server-express';
 import * as Users from '../services/Users';
-
-export const isAuthenticated = (parent, args, { req }) =>
-  req.session.user ? skip : new ForbiddenError('Not authenticated as user.');
+import * as Auth from '../services/Auth';
+import RefreshToken from '../models/RefreshToken';
+import { TOKEN_EXPIRE } from '../constants';
 
 export default {
   Mutation: {
@@ -33,7 +31,6 @@ export default {
         return new ApolloError(e.message || e, 422);
       }
     },
-
     login: async (_, data, { req }) => {
       const { email, password } = data;
 
@@ -44,17 +41,37 @@ export default {
           return new ApolloError('There is no user with such email.', 400);
         }
 
-        await Accounts.validatePassword(password, user.passwordHash);
+        await Auth.validatePassword(password, user.passwordHash);
 
-        req.session.user = {
-          id: user.id,
-          type: user.type,
+        return {
+          ...user,
+          ...Auth.getTokens(user),
         };
-
-        return user;
       } catch (e) {
         return new ValidationError(e.message || e);
       }
+    },
+    token: async (_, data, { req }) => {
+      const { refreshToken } = data;
+
+      const refreshTokenModel = await RefreshToken.query()
+        .where({ value: refreshToken })
+        .first();
+
+      if (!refreshTokenModel) {
+        return new ApolloError('There is no such refresh token');
+      }
+      const currentDate = new Date();
+      const tokenTime = new Date(refreshTokenModel.createdAt);
+
+      if (!(currentDate.getTime() - tokenTime.getTime() < TOKEN_EXPIRE)) {
+        return new ApolloError('Refresh token has been expired');
+      }
+
+      const user = await Users.getUserBy('id', refreshTokenModel.userId);
+      await RefreshToken.query().deleteById(refreshTokenModel.id);
+
+      return Auth.getTokens(user);
     },
   },
 };

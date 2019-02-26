@@ -22,7 +22,6 @@ export const preparePassword = async (password) => ({
 
 export const prepareUserForRegistration = async (params) => {
   const user = _.pick(params, ['firstName', 'lastName', 'email', 'password']);
-
   Object.assign(user, await preparePassword(user.password));
   user.confirmationCode = uuidv4();
   user.statusKey = STATUS_UNCONFIRMED;
