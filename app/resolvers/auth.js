@@ -31,7 +31,7 @@ export default {
         return new ApolloError(e.message || e, 422);
       }
     },
-    login: async (_, data, { req }) => {
+    login: async (_, data) => {
       const { email, password } = data;
 
       try {
@@ -51,7 +51,7 @@ export default {
         return new ValidationError(e.message || e);
       }
     },
-    token: async (_, data, { req }) => {
+    token: async (_, data) => {
       const { refreshToken } = data;
 
       const refreshTokenModel = await RefreshToken.query()

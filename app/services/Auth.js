@@ -1,14 +1,22 @@
 import jwt from 'jsonwebtoken';
 import randToken from 'rand-token';
-import config from '../config';
 import bcrypt from 'bcrypt';
+import { ApolloError } from 'apollo-server-express';
+import { skip } from 'graphql-resolvers';
 import RefreshToken from '../models/RefreshToken';
+import config from '../config';
 
 const getJWTUserModel = (user) => ({
   roleKey: user.roleKey,
   email: user.email,
   id: user.id,
 });
+
+export const isAuthenticated = (parent, data, { user }) =>
+  user.id ? skip : new ApolloError(user);
+
+export const getUserByToken = async (token) =>
+  jwt.verify(token, config.secret, (err, decoded) => decoded || err.message);
 
 const getJWT = (user) => {
   const jwtUserModel = getJWTUserModel(user);

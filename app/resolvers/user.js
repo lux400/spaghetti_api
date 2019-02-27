@@ -1,11 +1,17 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { ValidationError } from 'apollo-server-express';
 import * as Users from '../services/Users';
+import { isAuthenticated } from '../services/Auth';
 
 export default {
   Query: {
-    users: combineResolvers((parent, data, { models: { User } }) => User.query()),
-    me: combineResolvers((_, __, { req }) => Users.getUserBy('id', req.session.user.id)),
+    users: combineResolvers(isAuthenticated, (parent, data, { dataSources }) =>
+      dataSources.users.getUsers(),
+    ),
+
+    me: combineResolvers((_, __, { req }) =>
+      Users.getUserBy('id', req.session.user.id),
+    ),
   },
 
   Mutation: {

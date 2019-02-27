@@ -27,6 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-datasource-rest": "^0.3.2",
     "apollo-server-express": "^2.4.5",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.2",
@@ -40,8 +41,6 @@
     "morgan": "^1.9.0",
     "objection": "^1.5.3",
     "objection-visibility": "^0.4.0",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
     "pg": "^7.8.0",
     "rand-token": "^0.4.0",
     "uuid": "^3.3.2"
