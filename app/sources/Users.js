@@ -9,4 +9,8 @@ export default class UsersAPI extends RESTDataSource {
   async getUsers() {
     return this.get('users');
   }
+
+  async getUser(id) {
+    return this.get(`users/${id}`);
+  }
 }

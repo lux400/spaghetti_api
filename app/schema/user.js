@@ -26,11 +26,18 @@ export default gql`
   }
 
   type Query {
-    users(authToken: String) : [User]!
-    me(authToken: String): User
+    users: [User]!
+    user(id: Int!): User
+    me: User
   }
 
   type Mutation {
-    updateUser(id: ID, email: String, firstName: String, lastName: String, statusKey: String): User
+    updateUser(
+      id: ID
+      email: String
+      firstName: String
+      lastName: String
+      statusKey: String
+    ): User
   }
 `;

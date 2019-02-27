@@ -6,8 +6,9 @@ export const index = async (req, res) => {
   res.json(users);
 };
 
-export const show = async (req, res) => {
+export const getOne = async (req, res) => {
   const { id } = req.params;
-  const users = await getUserBy('id', id);
-  res.json(users);
+  const user = await getUserBy('id', id);
+  console.log(user);
+  res.json(user);
 };

@@ -8,6 +8,9 @@ export default {
     users: combineResolvers(isAuthenticated, (parent, data, { dataSources }) =>
       dataSources.users.getUsers(),
     ),
+    user: combineResolvers(isAuthenticated, (parent, { id }, { dataSources }) =>
+      dataSources.users.getUser(id),
+    ),
 
     me: combineResolvers((_, __, { req }) =>
       Users.getUserBy('id', req.session.user.id),

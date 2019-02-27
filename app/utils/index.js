@@ -12,9 +12,9 @@ export const resources = (controller, { only } = {}) => {
   const routes = [
     ['/', 'get', 'index'],
     ['/', 'post', 'create'],
-    ['/:id', 'get', 'show'],
+    ['/:id', 'get', 'getOne'],
     ['/:id', 'put', 'update'],
-    ['/:id', 'delete', 'del'],
+    ['/:id', 'delete', 'remove'],
   ];
 
   routes
