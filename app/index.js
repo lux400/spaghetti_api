@@ -7,17 +7,12 @@ import * as models from './models';
 import schema from './schema';
 import resolvers from './resolvers';
 import { getUserByToken } from './services/Auth';
-import router from './routes';
-import UserAPI from './sources/Users';
 
 const { host, port } = config;
 
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
-  dataSources: () => ({
-    users: new UserAPI(),
-  }),
   context: async ({ req }) => {
     const { token } = req.headers;
     const user = await getUserByToken(token);
@@ -34,7 +29,6 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/api', router);
 
 app.use('/uploads', express.static('uploads'));
 

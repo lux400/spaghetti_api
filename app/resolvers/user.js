@@ -1,29 +1,24 @@
 import { combineResolvers } from 'graphql-resolvers';
-import { ValidationError } from 'apollo-server-express';
 import * as Users from '../services/Users';
 import { isAuthenticated } from '../services/Auth';
 
 export default {
   Query: {
-    users: combineResolvers(isAuthenticated, (parent, data, { dataSources }) =>
-      dataSources.users.getUsers(),
+    users: combineResolvers(
+      isAuthenticated,
+      (parent, args, { models: { User } }) => User.query(),
     ),
-    user: combineResolvers(isAuthenticated, (parent, { id }, { dataSources }) =>
-      dataSources.users.getUser(id),
+    user: combineResolvers(isAuthenticated, (parent, args) =>
+      Users.getUserBy('id', args.id),
     ),
-
     me: combineResolvers((_, __, { req }) =>
       Users.getUserBy('id', req.session.user.id),
     ),
   },
 
   Mutation: {
-    updateUser: combineResolvers(async (parent, { id, ...data }) => {
-      const updatedUser = await Users.updateUser(id, data);
-      if (!updatedUser) {
-        return new ValidationError('There is no such user');
-      }
-      return updatedUser;
-    }),
+    updateUser: combineResolvers((parent, { id, ...data }) =>
+      Users.updateUser(id, data),
+    ),
   },
 };

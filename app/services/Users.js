@@ -1,17 +1,25 @@
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 import bcrypt from 'bcrypt';
+import { ValidationError, ApolloError } from 'apollo-server-express';
 import { ROLE_USER, STATUS_UNCONFIRMED } from '../constants';
 import { User } from '../models';
 
 const saltRounds = 10;
 
-export const getUserBy = (field, value) =>
-  User.query()
+export const getUserBy = async (field, value) => {
+  const user = await User.query()
     .where(field, value)
     .first();
+  const error = new ApolloError(`There is no user with ${field} ${value}`);
+  return user || error;
+};
 
-export const updateUser = (id, data) => User.query().patchAndFetchById(id, data);
+export const updateUser = async (id, data) => {
+  const updatedUser = await User.query().patchAndFetchById(id, data);
+  const error = new ValidationError('There is no such user');
+  return updatedUser || error;
+};
 
 export const encryptPassword = (password) => bcrypt.hash(password, saltRounds);
 

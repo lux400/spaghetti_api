@@ -26,9 +26,9 @@ export default gql`
   }
 
   type Query {
-    users: [User]!
+    users(authToken: String): [User]!
     user(id: Int!): User
-    me: User
+    me(authToken: String): User
   }
 
   type Mutation {
