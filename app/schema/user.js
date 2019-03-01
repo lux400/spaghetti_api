@@ -1,34 +1,23 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  enum UserStatusEnum {
-    active
-    banned
-    unconfirmed
-  }
-
-  enum UserRoleEnum {
-    user
-    admin
-  }
-
   type User {
     id: ID!
     email: String!
     firstName: String
     lastName: String
     passwordHash: String!
-    statusKey: UserStatusEnum!
-    roleKey: UserRoleEnum!
+    statusKey: UserStatus!
+    roleKey: UserRole!
     confirmationCode: String
     token: String
     refreshToken: String
   }
 
   type Query {
-    users(authToken: String): [User]!
-    user(id: Int!): User
-    me(authToken: String): User
+    users(authToken: String): [User]! @auth(role: admin)
+    user(id: Int!): User @auth
+    me(authToken: String): User @auth
   }
 
   type Mutation {
@@ -38,6 +27,6 @@ export default gql`
       firstName: String
       lastName: String
       statusKey: String
-    ): User
+    ): User @auth
   }
 `;

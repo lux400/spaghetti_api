@@ -7,6 +7,7 @@ import * as models from './models';
 import schema from './schema';
 import resolvers from './resolvers';
 import { getUserByToken } from './services/Auth';
+import RequireAuthDirective from './directives/Auth';
 
 const { host, port } = config;
 
@@ -22,6 +23,10 @@ const server = new ApolloServer({
       user,
     };
   },
+  schemaDirectives: {
+    auth: RequireAuthDirective,
+  },
+  debug: false,
 });
 
 const app = express();

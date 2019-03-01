@@ -4,20 +4,19 @@ import { isAuthenticated } from '../services/Auth';
 
 export default {
   Query: {
-    users: combineResolvers(
-      isAuthenticated,
-      (parent, args, { models: { User } }) => User.query(),
+    users: combineResolvers((parent, args, { models: { User } }) =>
+      User.query(),
     ),
     user: combineResolvers(isAuthenticated, (parent, args) =>
       Users.getUserBy('id', args.id),
     ),
-    me: combineResolvers((_, __, { req }) =>
+    me: combineResolvers(isAuthenticated, (_, __, { req }) =>
       Users.getUserBy('id', req.session.user.id),
     ),
   },
 
   Mutation: {
-    updateUser: combineResolvers((parent, { id, ...data }) =>
+    updateUser: combineResolvers(isAuthenticated, (parent, { id, ...data }) =>
       Users.updateUser(id, data),
     ),
   },
