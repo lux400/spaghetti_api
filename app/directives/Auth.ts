@@ -8,11 +8,11 @@ import { FORBIDDEN, UNAUTHORIZED } from '../constants/messages/auth';
 /* eslint-disable */
 
 export default class AuthDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
+  visitFieldDefinition(field: any) {
     const { resolve = defaultFieldResolver } = field;
     const { role } = this.args;
 
-    field.resolve = async function resolver(...args) {
+    field.resolve = async function resolver(...args: any[]) {
       const [, , ctx] = args;
       const { user } = ctx;
 

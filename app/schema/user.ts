@@ -15,7 +15,7 @@ export default gql`
   }
 
   type Query {
-    users(authToken: String): [User]! @auth(role: admin)
+    users(authToken: String): [User]!
     user(id: Int!): User @auth
     me(authToken: String): User @auth
   }

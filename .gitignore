@@ -3,4 +3,9 @@ dist
 uploads/!.gitkeep
 .idea/
 .vscode/
-
+idea/
+build/
+temp/
+*.log
+dump.rdb
+.env

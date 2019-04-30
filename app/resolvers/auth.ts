@@ -1,18 +1,18 @@
 import { transaction } from 'objection';
-import { ApolloError, ValidationError } from 'apollo-server-express';
+import { ApolloError, ValidationError, IResolvers } from 'apollo-server-express';
 import * as Users from '../services/Users';
 import * as Auth from '../services/Auth';
 import RefreshToken from '../models/RefreshToken';
 import { TOKEN_EXPIRE } from '../constants';
 
-export default {
+export const resolvers: IResolvers = {
   Mutation: {
     register: async (_, data, { models: { User } }) => {
       const { email } = data;
-      const existingUser = await Users.getUserBy('email', email).select('id');
+      const existingUser = await Users.getUserBy('email', email);
 
       if (existingUser) {
-        return new ApolloError('There is user with such email.', 412);
+        return new ApolloError('There is user with such email.', '412');
       }
 
       const trx = await transaction.start(User.knex());
@@ -28,7 +28,7 @@ export default {
         return user;
       } catch (e) {
         await trx.rollback(e);
-        return new ApolloError(e.message || e, 422);
+        return new ApolloError(e.message || e, '422');
       }
     },
     login: async (_, data) => {
@@ -38,7 +38,7 @@ export default {
         const user = await Users.getUserBy('email', email);
 
         if (!user) {
-          return new ApolloError('There is no user with such email.', 400);
+          return new ApolloError('There is no user with such email.', '400');
         }
 
         await Auth.validatePassword(password, user.passwordHash);
@@ -69,9 +69,14 @@ export default {
       }
 
       const user = await Users.getUserBy('id', refreshTokenModel.userId);
+      if (!user) {
+        return new ApolloError('There is no user with such email.', '400');
+      }
       await RefreshToken.query().deleteById(refreshTokenModel.id);
 
       return Auth.getTokens(user);
     },
   },
 };
+
+export default resolvers;

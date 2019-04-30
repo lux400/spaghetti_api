@@ -1,6 +1,6 @@
 import { Model } from 'objection';
-import Knex from 'knex';
-import knexConfig from '../../knexfile';
+import * as Knex from 'knex';
+import { knexConfig } from '../../knexfile';
 import config from '../config';
 
 export { default as Base } from './Base';

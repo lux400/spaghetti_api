@@ -1,6 +1,7 @@
-import express from 'express';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
+import * as express from 'express';
+import * as morgan from 'morgan';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
 import config from './config';
 import * as models from './models';
@@ -13,15 +14,11 @@ const { host, port } = config;
 
 const server = new ApolloServer({
   typeDefs: schema,
-  resolvers,
+  resolvers: resolvers as any,
   context: async ({ req }) => {
     const { token } = req.headers;
     const user = await getUserByToken(token);
-    return {
-      req,
-      models,
-      user,
-    };
+    return { req, models, user };
   },
   schemaDirectives: {
     auth: AuthDirective,
@@ -31,10 +28,10 @@ const server = new ApolloServer({
 
 const app = express();
 
+app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use('/uploads', express.static('uploads'));
 
 server.applyMiddleware({ app });
