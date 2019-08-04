@@ -1,4 +1,7 @@
-module.exports = {
+export interface KnexConfig {
+  [key: string]: any;
+}
+export const knexConfig: KnexConfig = {
   development: {
     client: 'postgresql',
     connection: {
