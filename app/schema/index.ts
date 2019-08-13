@@ -1,6 +1,9 @@
-import user from './user';
-import auth from './auth';
-import directive from './directive';
-import enums from './enum';
+import { importSchema } from 'graphql-import';
+import { gql } from 'apollo-server-express';
 
-export default [enums, directive, user, auth];
+const typeDefs = importSchema('./app/schema/schema.graphql');
+const resolvers = {}
+// const schema = makeExecutableSchema({ typeDefs, resolvers })
+console.log(typeDefs);
+
+export default gql(typeDefs);

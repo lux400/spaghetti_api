@@ -1,0 +1,8 @@
+# import * from 'enum.graphql'
+# import * from 'directive.graphql'
+
+
+
+# import Query.*, Mutation.* from 'user.graphql'
+# import Query.*, Mutation.* from 'auth.graphql'
+

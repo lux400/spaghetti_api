@@ -9,7 +9,6 @@ import schema from './schema';
 import resolvers from './resolvers';
 import { getUserByToken } from './services/Auth';
 import { AuthDirective } from './directives';
-
 const { host, port } = config;
 
 const server = new ApolloServer({

@@ -1,8 +1,15 @@
+// @ts-ignore
+declare module '*.graphql' {
+  const Schema: string;
+
+  export = Schema;
+}
+
 export type Resolver = (
   parent: any,
   args: any,
   context: {
-    models: any
+    models: any;
   },
   info: any,
 ) => any;
@@ -12,7 +19,7 @@ export type GraphQLMiddlewareFunc = (
   parent: any,
   args: any,
   context: {
-    models: any
+    models: any;
   },
   info: any,
 ) => any;
