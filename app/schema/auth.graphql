@@ -3,7 +3,7 @@ type Tokens {
   refreshToken: String!
 }
 
-extend type Mutation {
+type Mutation {
   register(
     email: String!
     password: String!
