@@ -1,5 +1,5 @@
 import { Base } from '.';
-import { Role } from '../enums/role';
+import { Role } from '../enums';
 
 export default class User extends Base {
   static tableName = 'users';

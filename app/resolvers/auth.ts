@@ -34,6 +34,9 @@ export const resolvers: IResolvers = {
     login: async (_, data) => {
       const { email, password } = data;
 
+      console.log(email);
+      console.log(password);
+
       try {
         const user = await Users.getUserBy('email', email);
 
