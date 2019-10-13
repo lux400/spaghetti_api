@@ -1,5 +1,5 @@
 {
-  "name": "Untitled GraphQL Schema",
+  "name": "Spaghetti GraphQL Schema",
   "schemaPath": "schema.graphql",
   "extensions": {
     "endpoints": {
@@ -10,6 +10,11 @@
         },
         "introspect": false
       }
+    },
+    "extensions": {
+      "customDirectives": [
+        "directive @client on FIELD"
+      ]
     }
   }
 }
