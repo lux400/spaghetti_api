@@ -38,7 +38,7 @@
     "graphql-resolvers": "^0.3.2",
     "jsonwebtoken": "^8.5.0",
     "knex": "^0.16.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "morgan": "^1.9.0",
     "objection": "^1.6.11",
     "objection-visibility": "^0.4.0",
